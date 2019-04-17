@@ -1,0 +1,44 @@
+package users
+
+import (
+	"database/sql"
+	"fmt"
+	"github.com/go-sql-driver/mysql"
+	"github.com/jinzhu/gorm"
+	"go-ops/models"
+)
+
+type User struct {
+	models.Model
+	Username    string `json:"username" gorm:"type:varchar(64);unique_index;not null"`
+	Password    string `json:"password" gorm:"type:varchar(128)"`
+	UserProfile UserProfile // foreign key
+	Role sql.NullString  `json:"role"`
+}
+
+type UserProfile struct {
+	models.Model
+	UserID    uint
+	Email     sql.NullString    `json:"email" gorm:"type:varchar(128);unique_index;sql:"default: null"`
+	Telephone string    `json:"telephone" gorm:"varchar(16)"`
+	LastLogin mysql.NullTime `json:"last_login"`
+}
+
+
+//回调自动创建用户资料
+func (user *User) AfterCreate(db *gorm.DB) (err error) {
+	if err = models.DB.Create(&UserProfile{UserID: user.ID}).Error;err != nil {
+		fmt.Println(err)
+		return err
+	}
+	return nil
+}
+
+func GetUser(username string) (user User, err error) {
+	if err = models.DB.Where("username = ?", username).First(&user).Error; err != nil {
+		fmt.Println(err)
+		return user, err
+	} else {
+		return user, err
+	}
+}
