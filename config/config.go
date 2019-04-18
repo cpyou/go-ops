@@ -54,8 +54,6 @@ type OpsConfig struct {
 // mongodb
 type MongoConfig struct {
 	Uri     string
-	Cost    string
-	Monitor string
 }
 
 type CacheConfig struct {

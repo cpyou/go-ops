@@ -43,8 +43,6 @@ ops:
 
 mongodb:
   uri: mongodb://localhost:27017
-  cost: pricecount
-  monitor: monitor_cal
 
 cache:
   host: localhost:6379
