@@ -4,6 +4,7 @@ go 1.12
 
 require (
 	github.com/NebulousLabs/fastrand v0.0.0-20181203155948-6fb6489aac4e // indirect
+	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/Shopify/sarama v1.19.0
 	github.com/Unknwon/com v0.0.0-20190321035513-0fed4efef755
 	github.com/boj/redistore v0.0.0-20180917114910-cd5dcc76aeff // indirect
@@ -44,5 +45,4 @@ require (
 	google.golang.org/appengine v1.5.0 // indirect
 	google.golang.org/grpc v1.19.0
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
-	gopkg.in/ini.v1 v1.42.0
 )
