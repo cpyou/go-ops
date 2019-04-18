@@ -19,7 +19,7 @@ type MongoClient struct {
 
 func GetMongoClient() *mongo.Client {
 	c := config.GetConfig().MongoDB
-	client, err := mongo.NewClient(options.Client().ApplyURI(c.Uri))
+	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(c.Uri))
 	if err != nil {
 		fmt.Println(err)
 		panic(err)

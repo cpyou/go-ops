@@ -12,7 +12,7 @@
     
     
 # Run
-
+1. env     `export GOOPS_WORK_DIR=<your project working dir>`
 1. import pkg/app/generators/admin.sql
 
 ```sql
@@ -40,6 +40,6 @@
 - [x] permission 
 - [x] grpc
 - [x] message queue
-- [ ] cron tasks
-- [ ] mongodb
-- [ ] common api
+- [x] cron tasks
+- [x] mongodb
+- [x] common api

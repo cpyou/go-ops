@@ -23,7 +23,7 @@ func main()  {
 	tablePrefix = mysql.Prefix
 
 	var db *gorm.DB
-	db, err = gorm.Open(dbType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
+	db, _ = gorm.Open(dbType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
 		user,
 		password,
 		host,

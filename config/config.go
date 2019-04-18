@@ -4,6 +4,10 @@ import (
 	"fmt"
 	"github.com/spf13/viper"
 	"os"
+	"os/exec"
+	"path"
+	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -105,13 +109,23 @@ type KafkaConfig struct {
 	Port string
 }
 
+func GetCurrPath() string {
+	file, _ := exec.LookPath(os.Args[0])
+	path, _ := filepath.Abs(file)
+	index := strings.LastIndex(path, string(os.PathSeparator))
+	ret := path[:index]
+	return ret
+}
+
 func init() {
+	wd := os.Getenv("GOOPS_WORK_DIR")
+	confPath := path.Join(wd, "config/")
 	ginEnv := os.Getenv("gin_env")
 	if ginEnv == "" {
 		ginEnv = "local"
 	}
 	viper.SetConfigName(ginEnv)    // 设置配置文件名 (不带后缀)
-	viper.AddConfigPath("config/") // 第一个搜索路径
+	viper.AddConfigPath(confPath) // 第一个搜索路径
 	viper.WatchConfig()            // 监控配置文件热重载
 	err := viper.ReadInConfig()    // 读取配置数据
 	if err != nil {
