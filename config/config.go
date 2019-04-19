@@ -25,7 +25,7 @@ type Config struct {
 }
 
 type MySQLConfig struct {
-	HOST     string
+	Host     string
 	Username string
 	Password string
 	Port     string
@@ -35,7 +35,7 @@ type MySQLConfig struct {
 }
 
 type PgSQLConfig struct {
-	HOST     string
+	Host     string
 	Username string
 	Password string
 	Port     string
@@ -136,5 +136,4 @@ func init() {
 		fmt.Println(err)
 		panic(err)
 	}
-	fmt.Println(config)
 }

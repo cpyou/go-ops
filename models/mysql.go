@@ -30,7 +30,7 @@ func init() {
 	dbName = mysql.Dbname
 	user = mysql.Username
 	password = mysql.Password
-	host = mysql.HOST
+	host = mysql.Host
 	tablePrefix = mysql.Prefix
 
 	DB, err = gorm.Open(dbType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",

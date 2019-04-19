@@ -13,25 +13,28 @@
     
 # Run
 1. env     `export GOOPS_WORK_DIR=<your project working dir>`
-1. import pkg/app/generators/admin.sql
+           
+2. sql init           
+     
+     import `pkg/app/generators/admin.sql` to database
 
-```sql
-    source admin.sql
-```
 
-2. run migrate
+3. sql model migrate
+
+via cobra
 
 ```go
-    go run migrate.go  // 数据库初始化
-    go run init_permission.go  // casbin权限数据库初始化
+    ./cli/ops-cli migrate  // 数据库初始化
 ```
 
-3. run server
+4. run server
+
 ```go
     go run main.go
 ```
 
-4.run kafka
+5.run kafka
+
 > docker-compose -f docker-compose.yml up -d run kafka&zoopkeeper service
 
 
@@ -43,3 +46,5 @@
 - [x] cron tasks
 - [x] mongodb
 - [x] common api
+- [x] command line tool
+- [x] crawler

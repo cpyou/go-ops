@@ -16,16 +16,16 @@ common:
 
 mysql:
   dbtype: mysql
-  url: 127.0.0.1
+  host: localhost
   username: zs
   password: zs
   port: 3306
-  dbname: ops
+  dbname: go_ops
   prefix: ops
 
 pgsql:
   dbtype: postgresql
-  url: 127.0.0.1
+  host: 127.0.0.1
   username: zs
   password: zs
   port: 3306

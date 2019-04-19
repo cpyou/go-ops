@@ -23,6 +23,7 @@ require (
 	github.com/golang/protobuf v1.3.1
 	github.com/gorilla/sessions v1.1.3
 	github.com/gorilla/websocket v1.4.0
+	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/jakecoffman/cron v0.0.0-20190106200828-7e2009c226a5
 	github.com/jinzhu/gorm v1.9.2
 	github.com/jinzhu/inflection v0.0.0-20180308033659-04140366298a // indirect
@@ -34,10 +35,12 @@ require (
 	github.com/mattn/go-isatty v0.0.7 // indirect
 	github.com/mattn/go-sqlite3 v1.10.0 // indirect
 	github.com/mgutz/ansi v0.0.0-20170206155736-9520e82c474b // indirect
+	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/mapstructure v1.1.2
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/robfig/cron v0.0.0-20180505203441-b41be1df6967
+	github.com/spf13/cobra v0.0.3
 	github.com/spf13/viper v1.3.2
 	github.com/stretchr/testify v1.3.0
 	github.com/tidwall/pretty v0.0.0-20190325153808-1166b9ac2b65 // indirect
