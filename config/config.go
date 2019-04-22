@@ -22,6 +22,7 @@ type Config struct {
 	Cookie     CookieConfig
 	Common     CommonLog
 	Kafka      KafkaConfig
+	Email      EmailConfig
 }
 
 type MySQLConfig struct {
@@ -57,7 +58,7 @@ type OpsConfig struct {
 
 // mongodb
 type MongoConfig struct {
-	Uri     string
+	Uri string
 }
 
 type CacheConfig struct {
@@ -109,6 +110,13 @@ type KafkaConfig struct {
 	Port string
 }
 
+type EmailConfig struct {
+	Host     string
+	User     string
+	Password string
+	Admin  string
+}
+
 func GetCurrPath() string {
 	file, _ := exec.LookPath(os.Args[0])
 	path, _ := filepath.Abs(file)
@@ -124,10 +132,10 @@ func init() {
 	if ginEnv == "" {
 		ginEnv = "local"
 	}
-	viper.SetConfigName(ginEnv)    // 设置配置文件名 (不带后缀)
+	viper.SetConfigName(ginEnv)   // 设置配置文件名 (不带后缀)
 	viper.AddConfigPath(confPath) // 第一个搜索路径
-	viper.WatchConfig()            // 监控配置文件热重载
-	err := viper.ReadInConfig()    // 读取配置数据
+	viper.WatchConfig()           // 监控配置文件热重载
+	err := viper.ReadInConfig()   // 读取配置数据
 	if err != nil {
 		panic(fmt.Errorf("Fatal error config file: %s \n", err))
 	}

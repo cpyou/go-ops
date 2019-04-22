@@ -48,3 +48,4 @@ via cobra
 - [x] common api
 - [x] command line tool
 - [x] crawler
+- [ ] error email

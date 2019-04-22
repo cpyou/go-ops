@@ -60,3 +60,10 @@ cokkie:
 kafka:
   host: localhost
   port: 9092
+
+
+email:
+  host:
+  password:
+  user:
+  admin:

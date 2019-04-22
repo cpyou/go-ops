@@ -4,6 +4,7 @@ import (
 	_ "github.com/chenhg5/go-admin/adapter/gin" // 必须引入，如若不引入，则需要自己定义
 	"github.com/gin-gonic/gin"
 	"go-ops/middlewares/auth"
+	"go-ops/middlewares/erroremail"
 	"go-ops/middlewares/permission"
 	"go-ops/routers/api/auth_api"
 	"go-ops/routers/api/v1"
@@ -13,7 +14,7 @@ import (
 func InitRouter() *gin.Engine {
 	// 日志与恢复中间件  gin.New() 不带这两个中间件
 	r := gin.Default()
-	//r.Use(auth.RegisterSession()) // session中间件
+	r.Use(erroremail.ErrEmailWriter())  // 500发送报错邮件
 
 	apiAuth := r.Group("api/auth")
 	{

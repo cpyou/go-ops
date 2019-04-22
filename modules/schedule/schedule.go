@@ -10,12 +10,12 @@ import (
 
 func init() {
 	c := cron.New()
-
+	common := config.GetConfig().Common
 	// 切割日志
 	c.AddFunc("0 59 23 * * *", func() {
-		cutLog(config.GetEnv().ACCESS_LOG_PATH)
-		cutLog(config.GetEnv().INFO_LOG_PATH)
-		cutLog(config.GetEnv().ERROR_LOG_PATH)
+		cutLog(common.ACCESS_LOG_PATH)
+		cutLog(common.INFO_LOG_PATH)
+		cutLog(common.ERROR_LOG_PATH)
 		log.InitAllLogger()
 	})
 
