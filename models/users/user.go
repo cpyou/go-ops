@@ -12,13 +12,14 @@ type User struct {
 	models.Model
 	Username    string `json:"username" gorm:"type:varchar(64);unique_index;not null"`
 	Password    string `json:"password" gorm:"type:varchar(128)"`
-	UserProfile UserProfile // foreign key
 	Role sql.NullString  `json:"role"`
+
+	UserProfile UserProfile // OneToOne
+	Tasks []models.BaseTask // Foreign key
 }
 
 type UserProfile struct {
-	models.Model
-	UserID    uint
+	UserID    uint `gorm:"primary_key"`  // OneToOne
 	Email     sql.NullString    `json:"email" gorm:"type:varchar(128);unique_index;sql:"default: null"`
 	Telephone string    `json:"telephone" gorm:"varchar(16)"`
 	LastLogin mysql.NullTime `json:"last_login"`

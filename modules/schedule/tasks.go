@@ -1,6 +1,0 @@
-package schedule
-
-
-func Test() {
-
-}

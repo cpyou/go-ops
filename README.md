@@ -1,6 +1,5 @@
 # Required
 
-
     Mysql
     Redis
     MongoDB
@@ -48,4 +47,9 @@ via cobra
 - [x] common api
 - [x] command line tool
 - [x] crawler
-- [ ] error email
+- [x] error email
+
+## simple web example
+1.任务管理
+2.通知
+<!--数据源 https://piaofang.maoyan.com/dashboard-->
