@@ -6,16 +6,17 @@ import (
 	"github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"go-ops/models"
+	"go-ops/models/tasks"
 )
 
 type User struct {
-	models.Model
+	models.BaseModel
 	Username    string `json:"username" gorm:"type:varchar(64);unique_index;not null"`
 	Password    string `json:"password" gorm:"type:varchar(128)"`
 	Role sql.NullString  `json:"role"`
 
-	UserProfile UserProfile // OneToOne
-	Tasks []models.BaseTask // Foreign key
+	UserProfile UserProfile  // OneToOne
+	TaskLogs []tasks.TaskLog // Foreign key
 }
 
 type UserProfile struct {

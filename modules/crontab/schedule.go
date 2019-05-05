@@ -1,37 +1,39 @@
-package task
+package crontab
 
 import (
 	"go-ops/config"
 	"go-ops/models"
+	"go-ops/models/tasks"
 	"go-ops/modules/cron"
 	"go-ops/modules/log"
 )
 
 var (
-	TaskMap map[string]cron.Job  // 任务集
+	JobMap map[string]func(tasks.Parameter) // 任务集
 )
 
 type TaskCron struct {
 	*cron.Cron
 }
 
-func (tc TaskCron) CreateTask(task models.Task) {
+func (tc TaskCron) CreateTask(task tasks.Task) {
 	if task.Frequency == "once" {
 		runtime := task.StartTime.Time
-		tc.Schedule(cron.RunAt(runtime), TaskMap[task.Name], task.Name)
+		tc.Schedule(cron.RunAt(runtime), task, task.Name)
 	} else {
 		tc.AddFunc(task.Frequency, func() {}, task.Name)
 	}
 }
 
-// 任务初始化
+// cron init
 func ScheduleInit(tc TaskCron) {
-	var tasks []models.Task
+	var tasks []tasks.Task
 	models.DB.Find(&tasks)
 	for _, task := range tasks {
 		tc.CreateTask(task)
 	}
 }
+
 
 // 定时清理日志
 func init() {

@@ -36,7 +36,7 @@ func init() {
 
 //权限结构
 type CasbinModel struct {
-	models.Model
+	models.BaseModel
 	Ptype    string `json:"p_type"`
 	RoleName string `json:"role_name"`
 	Path     string `json:"path"`

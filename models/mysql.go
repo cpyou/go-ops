@@ -11,7 +11,7 @@ import (
 
 var DB *gorm.DB
 
-type Model struct {
+type BaseModel struct {
 	ID        uint      `json:"id" gorm:"primary_key" gorm:"AUTO_INCREMENT"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
