@@ -29,15 +29,14 @@ func RunAt(runtime time.Time) DelaySchedule {
 	if now.After(runtime) {
 		panic("runtime need after now ")
 	}
-	return DelaySchedule{runTime: now}
+	return DelaySchedule{runTime: runtime}
 }
 
 
 // Next returns the next time this should be run.
 // This rounds so that the next activation time will be on the second.
 func (schedule DelaySchedule) Next(t time.Time) time.Time {
-	now := time.Now()
-	if now.After(schedule.runTime) {
+	if t.Before(schedule.runTime) {
 		return time.Time{}
 	}
 	return schedule.runTime

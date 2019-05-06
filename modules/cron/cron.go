@@ -191,7 +191,7 @@ func (c *Cron) run() {
 				}
 				go e.Job.Run()
 				e.Prev = e.Next
-				e.Next = e.Schedule.Next(effective) // refresh Next time
+				e.Next = e.Schedule.Next(effective) // refresh Next
 			}
 			continue
 

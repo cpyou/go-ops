@@ -6,7 +6,6 @@ import (
 	"go-ops/models"
 	"go-ops/modules/crontab"
 	"go-ops/pkg/json"
-	"golang.org/x/perf/storage/db"
 	"log"
 	"time"
 )
@@ -52,41 +51,37 @@ func NewParameter(m map[string]string) Parameter {
 	return Parameter(m)
 }
 
+// 对应 cron 中 entry
 type Task struct {
 	models.BaseModel
-	UserId      uint           `json:"user_id"` // user of create task
+	UserId      uint           `json:"user_id"`    // user of create task
 	StartTime   mysql.NullTime `json:"start_time"` // once task runtime
 	EndTime     mysql.NullTime `json:"end_time"`
 	DeadLine    mysql.NullTime `json:"dead_line"`
 	Status      Status         `json:"status" sql:"type:ENUM('waiting', 'doing', 'done', 'fail')"`
-	Name        string         `json:"name"`     // unique by program
-	Frequency   string         `json:"frequency"`                    // cron config or once
+	Name        string         `json:"name" gorm:"unique_index"`      // unique by program
+	Frequency   string         `json:"frequency"` // cron config or once
 	Active      bool           `json:"active" gorm:"default:true"`
 	NextRuntime time.Time      `json:"next_runtime" gorm:"-"`
-	Parameter   Parameter 	   `json:"parameter" sql:"type:json"`
 	TaskLogs    []TaskLog
-	JobId   uint
+	JobId       uint
 }
 
-// 作业
+// 独立的作业
 type Job struct {
 	models.BaseModel
-	Tasks []Task
-	JobName     string         `json:"job_name";gorm:"unique_index"` // function to call
+	Tasks     []Task
+	JobName   string    `json:"job_name" gorm:"unique_index"` // function to call
+	Parameter Parameter `json:"parameter" sql:"type:json"`
 }
 
-
-
-type TaskOperation struct {
-
-}
 
 // run task
 func (task Task) Run() {
 	job := task.GetJob()
 	fc := crontab.JobMap[job.JobName]
 	task.AuditLog() // action audit
-	fc(task.Parameter)
+	fc(job.Parameter)
 }
 
 // audit log
@@ -102,15 +97,32 @@ func (task *Task) Create() (insertId uint) {
 	err := models.DB.Create(&task).Error
 	if err != nil {
 		log.Fatal(err)
-		panic(err)
 	}
 	return task.ID
 }
 
 func (task *Task) GetJob() (job Job) {
 	models.DB.First(&job, task.JobId)
+	return job
 }
 
+// close task
+func (task *Task) Deactivate() error {
+	err := models.DB.Model(&task).Updates(Task{Active:false}).Error
+	if err == nil {
+		crontab.Crontab.RemoveJob(task.Name)
+	}
+	return err
+}
+
+// open task
+func (task *Task) Activate() error {
+	err := models.DB.Model(&task).Updates(Task{Active:true}).Error
+	if err == nil {
+		crontab.Crontab.CreateTask(*task)
+	}
+	return err
+}
 
 func GetTaskByName(task *Task, name string) {
 	models.DB.Where("name = ?", name).Find(&task, name)
@@ -124,7 +136,7 @@ func (task *Task) Stop() error {
 	return nil
 }
 
-func (task *Task) GetStatus() string {
+func (task *Task) GetStatus() Status {
 	return task.Status
 }
 
